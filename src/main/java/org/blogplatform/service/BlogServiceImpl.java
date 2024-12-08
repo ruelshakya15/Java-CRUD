@@ -35,7 +35,7 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public ResponseEntity<String> getBlog(Integer id) {
         Blog blog = blogRepo.findById(id).orElseThrow(()->new EntityNotFoundException("Blog not found"));
-        return ResponseEntity.status(HttpStatus.OK).body("Blog has been deleted. "+ blog.toString());
+        return ResponseEntity.status(HttpStatus.OK).body("Blog retrieved "+ blog.toString());
     }
 
     @Override

@@ -31,16 +31,13 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public ResponseEntity<String> getComment(Integer id) {
-        if (!commentRepo.existsById(id)) throw new EntityNotFoundException("Comment does not exist.");
-        Comment comment = commentRepo.findById(id).get();
+        Comment comment = commentRepo.findById(id).orElseThrow(()-> new EntityNotFoundException("Comment does not exist."));
         return ResponseEntity.ok(comment.toString());
     }
 
     @Override
     public ResponseEntity<String> updateComment(Integer id, String body) {
-        if (!commentRepo.existsById(id)) throw new EntityNotFoundException("Comment does not exist.");
-
-        Comment comment = commentRepo.findById(id).get();
+        Comment comment = commentRepo.findById(id).orElseThrow(()-> new EntityNotFoundException("Comment does not exist."));
         comment.setContent(body);
         commentRepo.save(comment);
         return ResponseEntity.ok("Comment updated");

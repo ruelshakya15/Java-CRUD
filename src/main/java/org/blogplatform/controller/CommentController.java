@@ -5,7 +5,10 @@ import org.blogplatform.model.Comment;
 import org.blogplatform.service.BlogServiceImpl;
 import org.blogplatform.service.CommentServiceImpl;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import org.blogplatform.model.Role;
 
 @RestController
 @RequestMapping("/api/v1/comment")
@@ -18,6 +21,7 @@ public class CommentController {
 
     @GetMapping("/getId/{id}")
     public ResponseEntity<String> getCommentById(@PathVariable("id") int id) {
+        System.out.println("in comment controller:" + id);
         return commentService.getComment(id);
     }
 
@@ -26,6 +30,7 @@ public class CommentController {
         return commentService.saveComment(comment);
     }
 
+    @PreAuthorize("hasAuthority('USER')")
     @PutMapping("/updateComment/{id}")
     public ResponseEntity<String> updateComment(@PathVariable("id") int id, @RequestBody String comment) {
         return commentService.updateComment(id, comment);
